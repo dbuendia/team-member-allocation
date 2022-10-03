@@ -1,5 +1,5 @@
-import femaleProfile from "./images/femaleProfile.jpg";
-import maleProfile from "./images/maleProfile.jpg";
+import Teams from "./Teams";
+import TeamMembers from "./TeamMembers";
 
 const Employees = ({
   employees,
@@ -9,54 +9,27 @@ const Employees = ({
 }) => {
   return (
     <main className="container">
-      <p>TODO Añadir instrucciones aquí:</p>
+      <p>
+        Se muestran resaltados los miembros del team seleccionado en el
+        desplegable. Haz click en un miembro para eliminarlo de su equipo actual
+        o añadirlo al team seleccionado en el desplegable.
+      </p>
       <div className="row justify-content-center mt-3 mb-3">
         <div className="col-6">
-          <select
-            className="form-select form-select-lg"
-            value={selectedTeam}
-            onChange={handleTeamSelectionChange}
-          >
-            <option value="TeamA">TeamA</option>
-            <option value="TeamB">TeamB</option>
-            <option value="TeamC">TeamC</option>
-            <option value="TeamD">TeamD</option>
-          </select>
+          <Teams
+            selectedTeam={selectedTeam}
+            handleTeamSelectionChange={handleTeamSelectionChange}
+          />
         </div>
-        <div className="col-8">
+        <div className="col-10">
           <div className="card-collection">
-            {employees.map((employee) => {
-              return (
-                <div
-                  key={employee.id}
-                  id={employee.id}
-                  // Si la card pertenece al selectedTeam, le añadimos la clase standout para destacarla
-                  className={
-                    employee.teamName === selectedTeam
-                      ? "card m-2 standout"
-                      : "card m-2"
-                  }
-                  style={{ cursor: "pointer" }}
-                  onClick={handleEmployeeCardClick}
-                >
-                  {employee.gender === "female" ? (
-                    <img src={femaleProfile} className="card-img-top" />
-                  ) : (
-                    <img src={maleProfile} className="card-img-top" />
-                  )}
-                  <div className="card-body">
-                    <h5 className="card-title">
-                      Full Name: {employee.fullName}
-                    </h5>
-                    <p className="card-text">
-                      <b>Designation </b>
-                      {employee.designation}
-                    </p>
-                    <p>{employee.teamName}</p>
-                  </div>
-                </div>
-              );
-            })}
+            {
+              <TeamMembers
+                employees={employees}
+                handleEmployeeCardClick={handleEmployeeCardClick}
+                selectedTeam={selectedTeam}
+              />
+            }
           </div>
         </div>
       </div>

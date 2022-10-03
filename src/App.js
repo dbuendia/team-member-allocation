@@ -1,8 +1,12 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./Header";
+import Nav from "./Nav";
 import Employees from "./Employees";
+import GroupedTeamMembers from "./GroupedTeamMembers";
 import Footer from "./Footer";
+import NotFound from "./NotFound";
 
 function App() {
   // Accedemos al almacenamiento local para setear el valor que hubiera sido seleccionado para selectedTeam.
@@ -129,7 +133,8 @@ function App() {
     setEmployees(transformedEmployees);
   }
   return (
-    <div className="App">
+    <Router>
+      <Nav />
       <Header
         selectedTeam={selectedTeam}
         // Que nos devuelva un array con los empleados que estén en el team seleccionado y contamos su length para obtener el número
@@ -139,14 +144,32 @@ function App() {
           }).length
         }
       />
-      <Employees
-        employees={employees}
-        selectedTeam={selectedTeam}
-        handleEmployeeCardClick={handleEmployeeCardClick}
-        handleTeamSelectionChange={handleTeamSelectionChange}
-      />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Employees
+              employees={employees}
+              selectedTeam={selectedTeam}
+              handleEmployeeCardClick={handleEmployeeCardClick}
+              handleTeamSelectionChange={handleTeamSelectionChange}
+            />
+          }
+        />
+        <Route
+          path="/GroupedTeamMembers"
+          element={
+            <GroupedTeamMembers
+              employees={employees}
+              selectedTeam={selectedTeam}
+              setTeam={setTeam}
+            />
+          }
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
       <Footer />
-    </div>
+    </Router>
   );
 }
 
