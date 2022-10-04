@@ -146,7 +146,7 @@ function App() {
       />
       <Routes>
         <Route
-          path="/"
+          path="/team-member-allocation/"
           element={
             <Employees
               employees={employees}
